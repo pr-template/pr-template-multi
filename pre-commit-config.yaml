@@ -1,0 +1,8 @@
+# repos:
+# - repo: local
+#   hooks:
+#   - id: block-bot-changes
+#     name: Block Bot Changes
+#     entry: bash block-bot-changes.sh
+#     language: system
+#     stages: [commit]
