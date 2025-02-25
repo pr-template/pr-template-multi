@@ -2,10 +2,10 @@ name: Read PR Template Details
 
 on:
   pull_request:
-    # types: [opened, edited, synchronize]
-    types:
-      - closed
-    branches: [ 'development' ]
+    types: [opened, synchronize]
+    # types:
+    #   - closed
+    # branches: [ 'development' ]
 
 jobs:
   extract-pr-template:
