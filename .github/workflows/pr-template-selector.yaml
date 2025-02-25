@@ -39,7 +39,10 @@ name: PR Template Selector
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    # types: [opened, edited, synchronize]
+    types:
+      - closed
+    branches: [ 'development' , 'staging', 'ppd']
 
 permissions:
   contents: write
