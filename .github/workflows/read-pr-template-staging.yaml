@@ -43,7 +43,7 @@ jobs:
           echo "STAGE_US=$STAGE_US" >> $GITHUB_ENV
 
           echo "Extracted Image Tags:"
-          echo "AP Region: $STAGE_AP"
+          echo "AP Region: $STGE_AP"
           echo "EU Region: $STAGE_EU"
           echo "US Region: $STAGE_US"
           
