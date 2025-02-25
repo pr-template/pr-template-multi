@@ -65,14 +65,18 @@ jobs:
 
             if [[ "$BASE_BRANCH" == "development" ]]; then
               TEMPLATE_FILE=".github/PULL_REQUEST_TEMPLATE/dev.md"
+              echo "Using development template"
             elif [[ "$BASE_BRANCH" == "staging" ]]; then
               TEMPLATE_FILE=".github/PULL_REQUEST_TEMPLATE/stage.md"
+              echo "Using Stage template"
             elif [[ "$BASE_BRANCH" == "ppd" ]]; then
               TEMPLATE_FILE=".github/PULL_REQUEST_TEMPLATE/ppd.md"
+              echo "Using preprod template"
             elif [[ "$BASE_BRANCH" == "prod" ]]; then
               TEMPLATE_FILE=".github/PULL_REQUEST_TEMPLATE/prod.md"
+              echo "Using production template"
             else
-              TEMPLATE_FILE=".github/PULL_REQUEST_TEMPLATE/default.md"
+              echo "Select the correct Base branch"
             fi
 
             if [[ -f "$TEMPLATE_FILE" ]]; then
@@ -87,6 +91,7 @@ jobs:
               # echo "GitHub API Response Code: $RESPONSE"
               # echo "GitHub API Response Body:"
               # cat output.json
+              echo "$TEMPLATE_FILE"
             else
               echo "Error: Template file $TEMPLATE_FILE not found."
               exit 1
