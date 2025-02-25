@@ -39,7 +39,7 @@ name: PR Template Selector
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [opened, synchronize]
     # types:
     #   - closed
     # branches: [ 'development' , 'staging', 'ppd']
@@ -90,4 +90,4 @@ jobs:
             else
               echo "Error: Template file $TEMPLATE_FILE not found."
               exit 1
-            fi
+            fi 
