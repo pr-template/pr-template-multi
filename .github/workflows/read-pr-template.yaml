@@ -26,16 +26,15 @@ jobs:
         run: |
           PR_BODY=$(jq -r '.pull_request.body' < "$GITHUB_EVENT_PATH")
           echo "PR_BODY=$PR_BODY"
-
+          # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
+          # gh pr view ${{ github.event.pull_request.number }} --json body -q .body
           BUILD_PREF=$(echo "$PR_BODY" | grep -oP 'Do you want to create Preprod and Prod builds\s*:\s*\K[YN]') 
           echo "Build preference: $BUILD_PREF"
           echo "BUILD_PREF=$BUILD_PREF" >> $GITHUB_ENV
-
           # Extract image tags from the PR description
           DEV_AP=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "AP Region:" | awk -F'`' '{print $2}')          
           DEV_EU=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "EU Region:" | awk -F'`' '{print $2}')
           DEV_US=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "US Region:" | awk -F'`' '{print $2}') 
-
           echo "DEV_AP=$DEV_AP" >> $GITHUB_ENV
           echo "DEV_EU=$DEV_EU" >> $GITHUB_ENV
           echo "DEV_US=$DEV_US" >> $GITHUB_ENV
