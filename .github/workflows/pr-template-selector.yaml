@@ -19,8 +19,8 @@ jobs:
           BASE_BRANCH=${{ github.event.pull_request.base.ref }}
           if [ "$BASE_BRANCH" == "development" ]; then
             echo "Using development PR template"
-            gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
-            gh pr view ${{ github.event.pull_request.number }} --json body -q .body
+            # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
+            # gh pr view ${{ github.event.pull_request.number }} --json body -q .body
           elif [[ ${{ github.event.pull_request.base.ref }} == *"development"* ]]; then
             echo "Using development template"
             gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
