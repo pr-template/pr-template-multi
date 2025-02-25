@@ -1,6 +1,5 @@
 name: Read PR Template Details
 
-
 on:
   pull_request:
     types: [opened, edited, synchronize]
@@ -16,12 +15,12 @@ jobs:
       #   run: |
       #     echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
-      # - name: Fetch PR details
-      #   id: pr-details
-      #   run: |
-      #     gh pr view ${{ github.event.pull_request.number }} --json body -q .body > pr_body.txt
-      #     PR_BODY=$(cat pr_body.txt)
-      #     echo "Fetched PR Body: $PR_BODY"
+      - name: Fetch PR details
+        id: pr-details
+        run: |
+          gh pr view ${{ github.event.pull_request.number }} --json body -q .body > pr_body.txt
+          PR_BODY=$(cat pr_body.txt)
+          echo "Fetched PR Body: $PR_BODY"
       - name: Parse and Validate PR Body
         id: parse_pr
         run: |
