@@ -26,7 +26,8 @@ jobs:
         run: |
           PR_BODY=$(jq -r '.pull_request.body' < "$GITHUB_EVENT_PATH")
           echo "PR_BODY=$PR_BODY"
-
+          gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
+          gh pr view ${{ github.event.pull_request.number }} --json body -q .body
           BUILD_PREF=$(echo "$PR_BODY" | grep -oP 'Do you want to create Preprod and Prod builds\s*:\s*\K[YN]') 
           echo "Build preference: $BUILD_PREF"
           echo "BUILD_PREF=$BUILD_PREF" >> $GITHUB_ENV
