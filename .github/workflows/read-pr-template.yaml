@@ -31,7 +31,6 @@ jobs:
           BUILD_PREF=$(echo "$PR_BODY" | grep -oP 'Do you want to create Preprod and Prod builds\s*:\s*\K[YN]') 
           echo "Build preference: $BUILD_PREF"
           echo "BUILD_PREF=$BUILD_PREF" >> $GITHUB_ENV
-
           # Extract image tags from the PR description
           DEV_AP=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "AP Region:" | awk -F'`' '{print $2}')          
           DEV_EU=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "EU Region:" | awk -F'`' '{print $2}')
