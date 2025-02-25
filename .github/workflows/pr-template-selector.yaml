@@ -84,9 +84,9 @@ jobs:
                 -d "{\"body\": $PR_TEMPLATE}" \
                 "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER")
 
-              echo "GitHub API Response Code: $RESPONSE"
-              echo "GitHub API Response Body:"
-              cat output.json
+              # echo "GitHub API Response Code: $RESPONSE"
+              # echo "GitHub API Response Body:"
+              # cat output.json
             else
               echo "Error: Template file $TEMPLATE_FILE not found."
               exit 1
