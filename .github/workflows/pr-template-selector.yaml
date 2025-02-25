@@ -1,0 +1,33 @@
+name: PR Template Selector
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  select-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2    
+      - name: Debugging
+        run: |
+          echo "Base branch: ${{ github.event.pull_request.base.ref }}"
+      - name: Set PR Template
+        run: |
+          BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+          if [ "$BASE_BRANCH" == "development" ]; then
+            echo "Using development PR template"
+          elif [[ ${{ github.event.pull_request.base.ref }} == *"development"* ]]; then
+            echo "Using development template"
+              # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
+          elif [[ ${{ github.event.pull_request.head.ref }} == *"stage"* ]]; then
+            echo "Using staging template"
+              # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/stage.md)"
+          elif [[ ${{ github.event.pull_request.head.ref }} == *"prod"* ]]; then
+            echo "Using production template"
+              # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/prod.md)"
+          else
+            echo "No specific template applied"
+          fi
