@@ -35,7 +35,6 @@ jobs:
           DEV_AP=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "AP Region:" | awk -F'`' '{print $2}')          
           DEV_EU=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "EU Region:" | awk -F'`' '{print $2}')
           DEV_US=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "US Region:" | awk -F'`' '{print $2}') 
-
           echo "DEV_AP=$DEV_AP" >> $GITHUB_ENV
           echo "DEV_EU=$DEV_EU" >> $GITHUB_ENV
           echo "DEV_US=$DEV_US" >> $GITHUB_ENV
