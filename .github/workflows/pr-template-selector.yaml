@@ -21,13 +21,13 @@ jobs:
             echo "Using development PR template"
           elif [[ ${{ github.event.pull_request.base.ref }} == *"development"* ]]; then
             echo "Using development template"
-              # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
+            gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
           elif [[ ${{ github.event.pull_request.head.ref }} == *"stage"* ]]; then
             echo "Using staging template"
-              # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/stage.md)"
+            gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/stage.md)"
           elif [[ ${{ github.event.pull_request.head.ref }} == *"prod"* ]]; then
             echo "Using production template"
-              # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/prod.md)"
+            gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/prod.md)"
           else
             echo "No specific template applied"
           fi
