@@ -1,0 +1,52 @@
+name: Read PR Template Details
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  extract-pr-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      # - name: Set up GitHub CLI
+      #   run: |
+      #     echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      # - name: Fetch PR details
+      #   id: pr-details
+      #   run: |
+      #     gh pr view ${{ github.event.pull_request.number }} --json body -q .body > pr_body.txt
+      #     PR_BODY=$(cat pr_body.txt)
+      #     echo "Fetched PR Body: $PR_BODY"
+      - name: Parse and Validate PR Body
+        id: parse_pr
+        run: |
+          PR_BODY=$(jq -r '.pull_request.body' < "$GITHUB_EVENT_PATH")
+          echo "PR_BODY=$PR_BODY"
+          # gh pr edit ${{ github.event.pull_request.number }} --body "$(cat .github/PULL_REQUEST_TEMPLATE/dev.md)"
+          # gh pr view ${{ github.event.pull_request.number }} --json body -q .body
+          BUILD_PREF=$(echo "$PR_BODY" | grep -oP 'Do you want to create Preprod and Prod builds\s*:\s*\K[YN]') 
+          echo "Build preference: $BUILD_PREF"
+          echo "BUILD_PREF=$BUILD_PREF" >> $GITHUB_ENV
+          # Extract image tags from the PR description
+          DEV_AP=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "AP Region:" | awk -F'`' '{print $2}')          
+          DEV_EU=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "EU Region:" | awk -F'`' '{print $2}')
+          DEV_US=$(echo "$PR_BODY" | grep -A 3 "Dev Environment" | grep "US Region:" | awk -F'`' '{print $2}') 
+          echo "DEV_AP=$DEV_AP" >> $GITHUB_ENV
+          echo "DEV_EU=$DEV_EU" >> $GITHUB_ENV
+          echo "DEV_US=$DEV_US" >> $GITHUB_ENV
+
+          echo "Extracted Image Tags:"
+          echo "AP Region: $DEV_AP"
+          echo "EU Region: $DEV_EU"
+          echo "US Region: $DEV_US"
+          
+      - name: Print image tags for debugging
+        run: |
+          echo "AP Region: $DEV_AP"
+          echo "EU Region: $DEV_EU"
+          echo "US Region: $DEV_US"
+          echo "Preprod and Prod value : $BUILD_PREF"
