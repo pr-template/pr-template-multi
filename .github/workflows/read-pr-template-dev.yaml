@@ -2,14 +2,14 @@ name: Read PR Template Details
 
 on:
   pull_request:
-    types: [opened, synchronize, labeled]
+    types: [opened, synchronize, reopened]
     # types:
     #   - closed
     # branches: [ 'development' ]
 
 jobs:
   extract-pr-template:
-    if: github.event.label.name=='template-updated'
+    # if: github.event.label.name=='template-updated'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
