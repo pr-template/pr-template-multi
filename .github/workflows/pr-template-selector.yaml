@@ -36,7 +36,6 @@
 #             echo "No specific template applied"
 #           fi
 name: PR Template Selector
-
 on:
   pull_request:
     types: [opened]
