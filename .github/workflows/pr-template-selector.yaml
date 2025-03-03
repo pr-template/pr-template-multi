@@ -36,10 +36,9 @@
 #             echo "No specific template applied"
 #           fi
 name: PR Template Selector
-
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
     # types:
     #   - closed
     # branches: [ 'development' , 'staging', 'ppd']
@@ -62,7 +61,10 @@ jobs:
             PR_NUMBER=${{ github.event.pull_request.number }}
             REPO=${{ github.repository }}
             TOKEN=${{ secrets.GITHUB_TOKEN }}  # Securely use GitHub Token
-
+            if [[ "$BASE_BRANCH" == "main" || "$BASE_BRANCH" == "staging_production" ]]; then
+              echo "Skipping workflow for base branch: $BASE_BRANCH"
+              exit 0
+            fi
             if [[ "$BASE_BRANCH" == "development" ]]; then
               TEMPLATE_FILE=".github/PULL_REQUEST_TEMPLATE/dev.md"
               echo "Using development template"
